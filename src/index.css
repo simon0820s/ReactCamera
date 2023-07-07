@@ -58,3 +58,8 @@ button {
 button:hover {
     background-position: 100%;
 }
+
+canvas {
+    width: 100%;
+    height: auto;
+}

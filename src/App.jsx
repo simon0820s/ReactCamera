@@ -31,6 +31,13 @@ function App () {
     setHasPhoto(true)
   }
 
+  const closePhoto = () => {
+    const photo = photoRef.current
+    const ctx = photo.getContext('2d')
+    ctx.clearRect(0, 0, photo.width, photo.height)
+    setHasPhoto(false)
+  }
+
   useEffect(() => {
     getVideo()
   }, [videoRef])
@@ -40,9 +47,9 @@ function App () {
         <video ref={videoRef}></video>
         <button onClick={takePhoto}>SNAP!</button>
       </div>
-      <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
+      <div className={'result ' + (hasPhoto ? 'hasPhoto' : '')}>
         <canvas ref={photoRef}></canvas>
-        <button>CLOSE</button>
+        <button onClick={closePhoto}>CLOSE</button>
       </div>
     </div>
   )
