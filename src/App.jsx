@@ -7,13 +7,28 @@ function App () {
   const [hasPhoto, setHasPhoto] = useState(false)
   const getVideo = () => {
     navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 } }).then(stream => {
-      let video = videoRef.current
+      const video = videoRef.current
       video.srcObject = stream
       video.play()
     })
       .catch(err => {
         console.log(err)
       })
+  }
+
+  const takePhoto = () => {
+    const width = 414
+    const height = width / (16 / 9)
+
+    const video = videoRef.current
+    const photo = photoRef.current
+
+    photo.width = width
+    photo.height = height
+
+    const ctx = photo.getContext('2d')
+    ctx.drawImage(video, 0, 0, width, height)
+    setHasPhoto(true)
   }
 
   useEffect(() => {
@@ -23,7 +38,7 @@ function App () {
     <div className="app">
       <div className="camera">
         <video ref={videoRef}></video>
-        <button>SNAP!</button>
+        <button onClick={takePhoto}>SNAP!</button>
       </div>
       <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
         <canvas ref={photoRef}></canvas>
